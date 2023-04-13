@@ -416,7 +416,7 @@ void Motor_Control_Callback(void)
 				circle_num++;
 				before_roll_poly = false;
 			}	
-			if(motor_control.mode_run != Motor_Mode_Digital_Location)motor_control.mode_run = Motor_Mode_Digital_Location;  //电机使能
+			if(motor_control.mode_run != Motor_Mode_Digital_Location )motor_control.mode_run = Motor_Mode_Digital_Location;  //电机使能
 		}
 		else if(Mode == 2)                                                        //2:校准模式
 		{
@@ -504,10 +504,10 @@ void Motor_Control_Callback(void)
 		motor_control.state = Control_State_Stop;
 	else
 	{
-			if ( abs(motor_control.real_location - motor_control.goal_location) <= 3200)//当位置误差小于51200/16 = 3200，22.5°时，进入减速状态
+			if ( abs(motor_control.real_location - motor_control.goal_location) <= 1600)//当位置误差小于51200/32 = 1600，11.25°时，进入减速状态
 				motor_control.goal_speed = 0; 
-			if( (motor_control.real_location == motor_control.goal_location)
-			 && (motor_control.est_speed == 0))
+			if( (abs(motor_control.real_location - motor_control.goal_location) < 10)
+			 && (abs(motor_control.est_speed) < 5))
 			{
 				motor_control.state = Control_State_Finish;		//目标匹配
 			}
